@@ -1,28 +1,23 @@
 import { useLayoutEffect } from "react";
-
+import { useLocation } from "react-router-dom";
 import TarotCard from "../components/TarotCard";
 import { tarotCards } from "../data/tarotCards";
 
 import "../styles/cards.css";
 
-const CARDS_SCROLL_KEY = "silentsouls-cards-scroll";
-
 function Cards() {
+  const location = useLocation();
+
   useLayoutEffect(() => {
-    const saved = sessionStorage.getItem(CARDS_SCROLL_KEY);
-    window.scrollTo(0, saved !== null ? Number(saved) : 0);
+    const restoreScrollY = location.state?.restoreScrollY;
 
-    const saveScroll = () => {
-      sessionStorage.setItem(CARDS_SCROLL_KEY, String(window.scrollY));
-    };
+    if (typeof restoreScrollY === "number") {
+      window.scrollTo(0, restoreScrollY);
+      return;
+    }
 
-    window.addEventListener("scroll", saveScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", saveScroll);
-      saveScroll();
-    };
-  }, []);
+    window.scrollTo(0, 0);
+  }, [location.state?.restoreScrollY]);
 
   return (
     <main className="cards-page">
