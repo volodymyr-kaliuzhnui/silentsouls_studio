@@ -1,16 +1,31 @@
 import TarotCard from '../components/TarotCard'
 import { tarotCards } from '../data/tarotCards'
 
+import '../styles/cards.css'
+
 function Cards() {
   return (
-    <main className="page">
-      <h1>Карти Таро</h1>
-      <p>Каталог із {tarotCards.length} карт.</p>
-      <div className="cards-grid">
+    <main className="cards-page">
+      <section className="cards-page__intro">
+        <p className="section-eyebrow">КОЛОДА</p>
+
+        <h1>Карти Таро</h1>
+
+        <p className="cards-page__description">
+          Відкрийте значення карт Silent Souls та досліджуйте їхні образи,
+          символи й інтерпретації у прямому та перевернутому положенні.
+        </p>
+
+        <p className="cards-page__count">
+          У колоді: {tarotCards.length} карт
+        </p>
+      </section>
+
+      <section className="cards-grid">
         {tarotCards.map((card) => (
           <TarotCard key={card.id} card={card} />
         ))}
-      </div>
+      </section>
     </main>
   )
 }
