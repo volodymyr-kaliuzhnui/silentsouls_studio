@@ -1,9 +1,29 @@
-import TarotCard from '../components/TarotCard'
-import { tarotCards } from '../data/tarotCards'
+import { useLayoutEffect } from "react";
 
-import '../styles/cards.css'
+import TarotCard from "../components/TarotCard";
+import { tarotCards } from "../data/tarotCards";
+
+import "../styles/cards.css";
+
+const CARDS_SCROLL_KEY = "silentsouls-cards-scroll";
 
 function Cards() {
+  useLayoutEffect(() => {
+    const saved = sessionStorage.getItem(CARDS_SCROLL_KEY);
+    window.scrollTo(0, saved !== null ? Number(saved) : 0);
+
+    const saveScroll = () => {
+      sessionStorage.setItem(CARDS_SCROLL_KEY, String(window.scrollY));
+    };
+
+    window.addEventListener("scroll", saveScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", saveScroll);
+      saveScroll();
+    };
+  }, []);
+
   return (
     <main className="cards-page">
       <section className="cards-page__intro">
@@ -16,9 +36,7 @@ function Cards() {
           символи й інтерпретації у прямому та перевернутому положенні.
         </p>
 
-        <p className="cards-page__count">
-          У колоді: {tarotCards.length} карт
-        </p>
+        <p className="cards-page__count">У колоді: {tarotCards.length} карт</p>
       </section>
 
       <section className="cards-grid">
@@ -27,7 +45,7 @@ function Cards() {
         ))}
       </section>
     </main>
-  )
+  );
 }
 
-export default Cards
+export default Cards;

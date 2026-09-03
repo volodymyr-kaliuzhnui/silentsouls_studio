@@ -1,29 +1,32 @@
-import { Link, useParams } from 'react-router-dom'
-import { tarotCards } from '../data/tarotCards'
+import { useLayoutEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import '../styles/card-details.css'
+import BackToCardsLink from "../components/BackToCardsLink";
+import { tarotCards } from "../data/tarotCards";
+
+import "../styles/card-details.css";
 
 function CardDetails() {
-  const { slug } = useParams()
-  const card = tarotCards.find((item) => item.slug === slug)
+  const { slug } = useParams();
+  const card = tarotCards.find((item) => item.slug === slug);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   if (!card) {
     return (
       <main className="page">
         <p>Карту не знайдено.</p>
 
-        <Link to="/cards" className="button-link">
-          ← Назад до карт
-        </Link>
+        <BackToCardsLink />
       </main>
-    )
+    );
   }
 
   return (
     <main className="page">
-      <Link to="/cards" className="button-link">
-        ← Назад до карт
-      </Link>
+      <BackToCardsLink />
 
       <article className="card-details">
         <div className="card-details__visual">
@@ -36,7 +39,7 @@ function CardDetails() {
           ) : (
             <div className="card-details__placeholder">
               <span className="card-details__number">
-                {String(card.number).padStart(2, '0')}
+                {String(card.number).padStart(2, "0")}
               </span>
 
               <span className="card-details__symbol">✦</span>
@@ -55,18 +58,16 @@ function CardDetails() {
         <div className="card-details__content">
           <header className="card-details__header">
             <p className="section-eyebrow">
-              {card.arcana === 'major' ? 'СТАРШИЙ АРКАН' : 'МОЛОДШИЙ АРКАН'}
+              {card.arcana === "major" ? "СТАРШИЙ АРКАН" : "МОЛОДШИЙ АРКАН"}
             </p>
 
             <h1>{card.name}</h1>
 
-            <p className="card-details__original-name">
-              {card.originalName}
-            </p>
+            <p className="card-details__original-name">{card.originalName}</p>
 
             <p className="card-details__meta">
               Номер: {card.number}
-              {card.suit ? ` · Масть: ${card.suit}` : ''}
+              {card.suit ? ` · Масть: ${card.suit}` : ""}
             </p>
           </header>
 
@@ -74,8 +75,7 @@ function CardDetails() {
             <h2>Пряме положення</h2>
 
             <p className="card-meaning__keywords">
-              <strong>Ключові слова:</strong>{' '}
-              {card.upright.keywords.join(', ')}
+              <strong>Ключові слова:</strong> {card.upright.keywords.join(", ")}
             </p>
 
             <p>{card.upright.description}</p>
@@ -104,8 +104,8 @@ function CardDetails() {
             <h2>Перевернуте положення</h2>
 
             <p className="card-meaning__keywords">
-              <strong>Ключові слова:</strong>{' '}
-              {card.reversed.keywords.join(', ')}
+              <strong>Ключові слова:</strong>{" "}
+              {card.reversed.keywords.join(", ")}
             </p>
 
             <p>{card.reversed.description}</p>
@@ -132,7 +132,7 @@ function CardDetails() {
         </div>
       </article>
     </main>
-  )
+  );
 }
 
-export default CardDetails
+export default CardDetails;

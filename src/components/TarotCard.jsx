@@ -2,7 +2,11 @@ import { Link } from 'react-router-dom'
 
 function TarotCard({ card }) {
   return (
-    <Link to={`/cards/${card.slug}`} className="tarot-card">
+    <Link
+      to={`/cards/${card.slug}`}
+      state={{ fromCatalog: true }}
+      className="tarot-card"
+    >
       {card.image ? (
         <img
           src={card.image}
