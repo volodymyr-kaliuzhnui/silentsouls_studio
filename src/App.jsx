@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Header from "./components/Header";
+import ScrollToTopButton from "./components/ScrollToTopButton";
 import CardDetails from "./pages/CardDetails";
 import Cards from "./pages/Cards";
 import Contact from "./pages/Contact";
@@ -19,6 +20,8 @@ function App() {
         <Route path="/socials" element={<Socials />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+
+      <ScrollToTopButton />
     </BrowserRouter>
   );
 }
